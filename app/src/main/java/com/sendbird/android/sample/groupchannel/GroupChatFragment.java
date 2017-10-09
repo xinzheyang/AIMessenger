@@ -80,6 +80,7 @@ public class GroupChatFragment extends Fragment {
     private ImageButton mFileUploadButton;
     private View mCurrentEventLayout;
     private TextView mCurrentEventText;
+    private Button mSuggestionButton;
 
     private GroupChannel mChannel;
     private String mChannelUrl;
@@ -139,6 +140,9 @@ public class GroupChatFragment extends Fragment {
         mMessageSendButton = (Button) rootView.findViewById(R.id.button_group_chat_send);
         mFileUploadButton = (ImageButton) rootView.findViewById(R.id.button_group_chat_upload);
 
+        mSuggestionButton = (Button) rootView.findViewById(R.id.suggestion);
+        mSuggestionButton.setText("test");
+
         mMessageSendButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -157,6 +161,15 @@ public class GroupChatFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 requestMedia();
+            }
+        });
+
+        mSuggestionButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Button b = (Button) v;
+                String sugg = b.getText().toString();
+                sendUserMessage(sugg);
             }
         });
 

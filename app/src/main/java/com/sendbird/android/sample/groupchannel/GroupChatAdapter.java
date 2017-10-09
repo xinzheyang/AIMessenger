@@ -7,6 +7,7 @@ import android.util.Base64;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -707,6 +708,7 @@ class GroupChatAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
             readReceiptText = (TextView) itemView.findViewById(R.id.text_group_chat_read_receipt);
             dateText = (TextView) itemView.findViewById(R.id.text_group_chat_date);
 
+
             urlPreviewContainer = (ViewGroup) itemView.findViewById(R.id.url_preview_container);
             urlPreviewSiteNameText = (TextView) itemView.findViewById(R.id.text_url_preview_site_name);
             urlPreviewTitleText = (TextView) itemView.findViewById(R.id.text_url_preview_title);
@@ -750,6 +752,7 @@ class GroupChatAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
             messageText.setText(message.getMessage());
             timeText.setText(DateUtils.formatTime(message.getCreatedAt()));
+
 
             urlPreviewContainer.setVisibility(View.GONE);
             if (message.getCustomType().equals(URL_PREVIEW_CUSTOM_TYPE)) {
