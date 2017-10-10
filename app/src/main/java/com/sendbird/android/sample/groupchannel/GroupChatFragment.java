@@ -80,7 +80,10 @@ public class GroupChatFragment extends Fragment {
     private ImageButton mFileUploadButton;
     private View mCurrentEventLayout;
     private TextView mCurrentEventText;
-    private Button mSuggestionButton;
+
+    private Button mSuggestionButton1;
+    private Button mSuggestionButton2;
+    private Button mSuggestionButton3;
 
     private GroupChannel mChannel;
     private String mChannelUrl;
@@ -140,8 +143,14 @@ public class GroupChatFragment extends Fragment {
         mMessageSendButton = (Button) rootView.findViewById(R.id.button_group_chat_send);
         mFileUploadButton = (ImageButton) rootView.findViewById(R.id.button_group_chat_upload);
 
-        mSuggestionButton = (Button) rootView.findViewById(R.id.suggestion);
-        mSuggestionButton.setText("test");
+        mSuggestionButton1 = (Button) rootView.findViewById(R.id.suggestion1);
+        mSuggestionButton1.setText("Yes!");
+
+        mSuggestionButton2 = (Button) rootView.findViewById(R.id.suggestion2);
+        mSuggestionButton2.setText("Nope");
+
+        mSuggestionButton3 = (Button) rootView.findViewById(R.id.suggestion3);
+        mSuggestionButton3.setText("Maybe");
 
         mMessageSendButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -164,7 +173,25 @@ public class GroupChatFragment extends Fragment {
             }
         });
 
-        mSuggestionButton.setOnClickListener(new View.OnClickListener() {
+        mSuggestionButton1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Button b = (Button) v;
+                String sugg = b.getText().toString();
+                sendUserMessage(sugg);
+            }
+        });
+
+        mSuggestionButton2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Button b = (Button) v;
+                String sugg = b.getText().toString();
+                sendUserMessage(sugg);
+            }
+        });
+
+        mSuggestionButton3.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Button b = (Button) v;
