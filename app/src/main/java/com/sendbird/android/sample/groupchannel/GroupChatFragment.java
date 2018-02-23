@@ -61,12 +61,12 @@ import java.util.Hashtable;
 import java.util.List;
 import java.util.Random;
 
-import java.io.BufferedWriter;
 import java.io.FileWriter;
-import android.content.Context;
-import java.io.FileOutputStream;
-import java.io.OutputStreamWriter;
+
 import java.io.IOException;
+import android.os.Environment;
+
+
 public class GroupChatFragment extends Fragment {
     private static final String CONNECTION_HANDLER_ID = "CONNECTION_HANDLER_GROUP_CHAT";
 
@@ -98,8 +98,6 @@ public class GroupChatFragment extends Fragment {
 
     private boolean mIsTyping;
 
-    private Context mContext;
-
 
 
 
@@ -108,6 +106,7 @@ public class GroupChatFragment extends Fragment {
     private static final int maximum = posResponses.size()-1;
 
     private boolean newSugg = false;
+    private File chatlog;
     /**
      * To create an instance of this fragment, a Channel URL should be required.
      */
@@ -119,6 +118,8 @@ public class GroupChatFragment extends Fragment {
         fragment.setArguments(args);
 
         return fragment;
+
+
     }
 
     @Override
@@ -137,9 +138,12 @@ public class GroupChatFragment extends Fragment {
 
         mChatAdapter = new GroupChatAdapter(getActivity());
         setUpChatListAdapter();
-        mContext = mChatAdapter.getmContext();
+        //mContext = mChatAdapter.getmContext();
         // Load messages from cache.
         mChatAdapter.load(mChannelUrl);
+        File dir = new File(Environment.getExternalStorageDirectory().getAbsolutePath());
+        dir.mkdirs();
+        chatlog = new File(dir, "chatlog.txt");
     }
 
     @Nullable
@@ -305,7 +309,7 @@ public class GroupChatFragment extends Fragment {
                     mChatAdapter.markAllMessagesAsRead();
                     // Add new message to view
                     mChatAdapter.addFirst(baseMessage);
-                    writeToFile("Received: "+baseMessage.toString(), mContext);
+                    writeToFile("Received: "+baseMessage.toString());
                 }
                 //modify
                 updateSugg(posResponses);
@@ -729,7 +733,7 @@ public class GroupChatFragment extends Fragment {
         });
         updateSugg(posResponses);
         setSuggVisible();
-        writeToFile("User send:" + text, mContext);
+        writeToFile("User send:" + text);
         // Display a user message to RecyclerView
         mChatAdapter.addFirst(tempUserMessage);
     }
@@ -782,7 +786,7 @@ public class GroupChatFragment extends Fragment {
         mSuggestionButton1.setText(threeSugg.get(0));
         mSuggestionButton2.setText(threeSugg.get(1));
         mSuggestionButton3.setText(threeSugg.get(2));
-        writeToFile(threeSugg.toString(), mContext);
+        writeToFile(threeSugg.toString());
     }
 
     private void setSuggVisible() {
@@ -797,11 +801,11 @@ public class GroupChatFragment extends Fragment {
         mSuggestionButton3.setVisibility(View.GONE);
     }
 
-    private void writeToFile(String data,Context context) {
+    private void writeToFile(String data) {
         try {
-            OutputStreamWriter outputStreamWriter = new OutputStreamWriter(context.openFileOutput("config.txt", Context.MODE_APPEND));
-            outputStreamWriter.write(data);
-            outputStreamWriter.close();
+            FileWriter f = new FileWriter(chatlog);
+            f.write(data+"\n");
+            f.close();
         }
         catch (IOException e) {
             Log.e("Exception", "File write failed: " + e.toString());
